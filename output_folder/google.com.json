@@ -1,0 +1,140 @@
+{
+    "https://www.google.com/?zx=1765801840823&no_sw_cr=1": {
+        "page_url": "https://www.google.com/?zx=1765801840823&no_sw_cr=1",
+        "page_full_url": "https://www.google.com/?zx=1765801840823&no_sw_cr=1",
+        "page_name": "Google",
+        "xpaths": [
+            {
+                "name": "Not interested",
+                "visual_xpath": {
+                    "text": "//*[text()='Not interested']",
+                    "tag_text": "//div[text()='Not interested']",
+                    "tag_contains": "//div[contains(text(),'Not interested')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//div[@class=\"niO4u VDgVie SlP8xc\"]",
+                "full_xpath": "/div[@id=\"stUuGf\"]/div/div[2]/div/div/div/div[2]/div/promo-button-text/div/div",
+                "css_selector": "div.niO4u.VDgVie.SlP8xc",
+                "custom_xpath": "",
+                "final_xpath": "//div[text()='Not interested']",
+                "created_on": "2025-12-15 18:00:43"
+            },
+            {
+                "name": "Search",
+                "visual_xpath": {
+                    "text": "",
+                    "tag_text": "",
+                    "tag_contains": "",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "//*[@aria-label='Search']",
+                    "name": "//*[@name='q']",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": "//*[@title='Search']"
+                },
+                "relative_xpath": "//*[@id=\"APjFqb\"]",
+                "full_xpath": "/textarea[@id=\"APjFqb\"]",
+                "css_selector": "#APjFqb",
+                "custom_xpath": "",
+                "final_xpath": "//*[@aria-label='Search']",
+                "created_on": "2025-12-15 18:00:44"
+            }
+        ]
+    },
+    "https://www.google.com/?zx=1765802515957&no_sw_cr=1": {
+        "page_url": "https://www.google.com/?zx=1765802515957&no_sw_cr=1",
+        "page_full_url": "https://www.google.com/?zx=1765802515957&no_sw_cr=1",
+        "page_name": "Google",
+        "xpaths": [
+            {
+                "name": "Store",
+                "visual_xpath": {
+                    "text": "//*[text()='Store']",
+                    "tag_text": "//a[text()='Store']",
+                    "tag_contains": "//a[contains(text(),'Store')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "//*[@href='/url?sa=t&rct=j&q=&esrc=s&source=webhp&cd=&ved=0ahUKEwi8wrH-zr-RAxU1B7kGHYyEM_gQpMwCCAM&url=https%3A%2F%2Fstore.google.com%2FIN%3Futm_source%3Dhp_header%26utm_medium%3Dgoogle_ooo%26utm_campaign%3DGS100042%26hl%3Den-IN&usg=AOvVaw1yMLu5XT-r35gxGQEqYnyy&opi=89978449']",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//a[@class=\"MV3Tnb\"]",
+                "full_xpath": "/html/body/div[2]/div[2]/a[2]",
+                "css_selector": "a.MV3Tnb",
+                "custom_xpath": "",
+                "final_xpath": "//a[text()='Store']",
+                "created_on": "2025-12-15 18:11:58"
+            }
+        ]
+    },
+    "https://store.google.com/intl/en_in/ideas/why-buy-on-google-store/": {
+        "page_url": "https://store.google.com/intl/en_in/ideas/why-buy-on-google-store/",
+        "page_full_url": "https://store.google.com/intl/en_in/ideas/why-buy-on-google-store/",
+        "page_name": "Google Store: Exclusive Google Pixel Deals & Offers",
+        "xpaths": [
+            {
+                "name": "Shop now",
+                "visual_xpath": {
+                    "text": "//*[text()='Shop now']",
+                    "tag_text": "//span[text()='Shop now']",
+                    "tag_contains": "//span[contains(text(),'Shop now')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//span[@class=\"bento-button__text__content\"]",
+                "full_xpath": "/bento-analytics-module[@id=\"in-value-prop-lp-free shipping and return\"]/bento-app/bento-container/bento-theme/bento-box/div/div/bento-copy-group/span/bento-button/a/span[2]/span",
+                "css_selector": "span.bento-button__text__content",
+                "custom_xpath": "",
+                "final_xpath": "//span[text()='Shop now']",
+                "created_on": "2025-12-15 18:12:19"
+            }
+        ]
+    },
+    "https://store.google.com/in/category/phones?hl=en-IN": {
+        "page_url": "https://store.google.com/in/category/phones?hl=en-IN",
+        "page_full_url": "https://store.google.com/in/category/phones?hl=en-IN",
+        "page_name": "Pixel, the Only Smartphones Engineered by Google",
+        "xpaths": [
+            {
+                "name": "Google Pixel 10 series",
+                "visual_xpath": {
+                    "text": "//*[text()='Google Pixel 10 series']",
+                    "tag_text": "//div[text()='Google Pixel 10 series']",
+                    "tag_contains": "//div[contains(text(),'Google Pixel 10 series')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//div[@class=\"FSM3Ab\"]",
+                "full_xpath": "/section[@id=\"phone-cat-hero-intro-eyebrow\"]/div/div/div/div/div/div/div/div/div/div/h2/div/div/div/div",
+                "css_selector": "div.FSM3Ab",
+                "custom_xpath": "",
+                "final_xpath": "//div[text()='Google Pixel 10 series']",
+                "created_on": "2025-12-15 18:12:30"
+            }
+        ]
+    }
+}

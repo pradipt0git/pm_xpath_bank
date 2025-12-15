@@ -1,0 +1,21 @@
+Create a python, selenium application, which can run locally.
+There will be one config file with load_url : <any url user can provide here>
+There will be one driver folder where edge driver should be placed.
+A main.py should be there from which whole application will start, for execution create a separate bat file also which can trigger this main.py and start execution.
+There should be one folder - output_folder in this project 
+Main task of this project - 
+1. After running main.py get load url from config file and open the url in edge browser (I can not use other browser)
+2. AFter load complete executor can click on any object(eg. button, textbox, label, div, etc.) of the page, on every click I need to get xpaths of that element. 
+3. Get following xpaths - 
+	a. visual properties like - text, placeholder, accessability properties,value
+	b. relative xpath
+	c. full xpath
+	d. css selector path
+
+every click should pick the clickied elements xpaths.
+4. Save these xpaths in local json file, on each click update json, this output json has to be there in ouput_folder. output json file name should be same as  website domain (not full url).
+5. In the json save xpaths inside each page json object. page object should have page url, page name, xpaths[ visual_xpath:{}, relative_xpath:{}, full_xpath:{}, css+selector:{}, custom_xpath:{(this will not be automatically pick, manually executor can update this manually in json)} ] like this.
+6. combination of page url, page name, xpaths should be unique in the output json file
+
+
+
