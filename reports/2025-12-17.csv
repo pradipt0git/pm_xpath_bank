@@ -1,0 +1,6 @@
+page_url,element_name,element_xpath,is_exist,checked_date_time
+https://www.ibm.com/in-en,close icon,//*[@src='https://consent.trustarc.com/get?name=ibm_close_icon.svg'],yes,2025-12-17 18:04:01
+https://www.ibm.com/in-en,Recommended for you,//h5[text()='Recommended for you'],yes,2025-12-17 18:04:01
+https://www.ibm.com/in-en,Ferrari,//span[text()='Ferrari'],yes,2025-12-17 18:04:01
+https://www.ibm.com/in-en,Create personalized AI agents and assistants,//span[text()='Create personalized AI agents and assistants'],yes,2025-12-17 18:04:01
+https://www.ibm.com/products/watsonx-orchestrate?hp1,Put AI to work,//span[text()='Put AI to work'],yes,2025-12-17 18:04:24

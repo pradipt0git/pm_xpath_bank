@@ -18,6 +18,7 @@ import sys
 from datetime import datetime
 
 stop_flag = False
+recheck_mode = False
 
 injected_urls = set()
 
@@ -62,10 +63,17 @@ async def ws_handler(websocket):
             page_name = click_data.get('page_name')
             page_key = page_url
             if page_key not in data:
+                # Calculate next display_order
+                max_order = 0
+                for page_data in data.values():
+                    if 'display_order' in page_data:
+                        max_order = max(max_order, page_data['display_order'])
+                
                 data[page_key] = {
                     'page_url': page_url,
                     'page_full_url': page_url,
                     'page_name': page_name,
+                    'display_order': max_order + 1,
                     'xpaths': []
                 }
             xpath_entry = {
@@ -114,22 +122,78 @@ async def start_ws_server():
 def start_ws_server_thread():
     asyncio.run(start_ws_server())
 
+def monitor_url_thread(driver, stop_event):
+    """Monitor current URL and write to file for recheck page synchronization"""
+    url_file = 'current_url.txt'
+    while not stop_event.is_set():
+        try:
+            current_url = driver.current_url
+            with open(url_file, 'w') as f:
+                f.write(current_url)
+        except:
+            pass  # Ignore errors if driver is closed
+        time.sleep(0.5)  # Update every 500ms
+    # Clean up file on exit
+    if os.path.exists(url_file):
+        os.remove(url_file)
+
+def validate_xpaths_thread(driver, stop_event):
+    """Monitor for XPath validation requests and validate them"""
+    request_file = 'xpath_validation_request.json'
+    result_file = 'xpath_validation_result.json'
+    
+    while not stop_event.is_set():
+        try:
+            if os.path.exists(request_file):
+                # Read validation request
+                with open(request_file, 'r') as f:
+                    request_data = json.load(f)
+                
+                xpaths = request_data.get('xpaths', [])
+                results = {}
+                
+                # Validate each XPath
+                for xpath in xpaths:
+                    try:
+                        elements = driver.find_elements(By.XPATH, xpath)
+                        results[xpath] = len(elements) > 0
+                    except:
+                        results[xpath] = False
+                
+                # Write results
+                with open(result_file, 'w') as f:
+                    json.dump(results, f)
+                
+                # Remove request file
+                os.remove(request_file)
+        except:
+            pass  # Ignore errors
+        time.sleep(0.2)  # Check every 200ms
+    
+    # Clean up files on exit
+    if os.path.exists(request_file):
+        os.remove(request_file)
+    if os.path.exists(result_file):
+        os.remove(result_file)
+
 def inject_click_listener(driver):
-    script = """
+    recheck_flag = 'true' if recheck_mode else 'false'
+    script = f"""
     console.log('[XPath Collector] Injection script running');
-    if (!window.clickListenerInjected) {
+    window.recheckMode = {recheck_flag};
+    if (!window.clickListenerInjected) {{
         console.log('[XPath Collector] Listener not yet injected, setting up...');
-        if (!window.ws) {
+        if (!window.ws && !window.recheckMode) {{
             console.log('[XPath Collector] Creating WebSocket connection');
             window.ws = new WebSocket('ws://localhost:8765');
             window.ws.onopen = () => console.log('[XPath Collector] WebSocket CONNECTED');
             window.ws.onmessage = (e) => console.log('[XPath Collector] Server message:', e.data);
             window.ws.onerror = (e) => console.error('[XPath Collector] WebSocket ERROR:', e);
             window.ws.onclose = () => console.log('[XPath Collector] WebSocket CLOSED');
-        } else {
-            console.log('[XPath Collector] WebSocket already exists, state:', window.ws.readyState);
-        }
-        document.addEventListener('click', function(event) {
+        }} else {{
+            console.log('[XPath Collector] WebSocket already exists or recheck mode, state:', window.ws ? window.ws.readyState : 'N/A');
+        }}
+        document.addEventListener('click', function(event) {{
             console.log('[XPath Collector] Click detected on:', event.target.tagName);
             var element = event.target;
             var relativeXpath = getRelativeXPath(element);
@@ -144,93 +208,99 @@ def inject_click_listener(driver):
             var innerText = element.innerText ? element.innerText.trim() : '';
             var displayText = innerText || elementText;
             
-            var clickData = {
+            var clickData = {{
                 name: displayText || element.getAttribute('aria-label') || element.getAttribute('name') || element.getAttribute('placeholder') || element.getAttribute('value') || element.getAttribute('title') || element.getAttribute('alt') || tagName,
-                visual_xpath: {
-                    text: displayText ? "//*[text()='" + displayText.replace(/'/g, "\\'") + "']" : '',
-                    tag_text: displayText ? "//" + tagName + "[text()='" + displayText.replace(/'/g, "\\'") + "']" : '',
-                    tag_contains: displayText ? "//" + tagName + "[contains(text(),'" + displayText.substring(0, 50).replace(/'/g, "\\'") + "')]" : '',
-                    placeholder: element.getAttribute('placeholder') ? "//*[@placeholder='" + element.getAttribute('placeholder').replace(/'/g, "\\'") + "']" : '',
-                    value: element.getAttribute('value') ? "//*[@value='" + element.getAttribute('value').replace(/'/g, "\\'") + "']" : '',
-                    accessibility: element.getAttribute('aria-label') ? "//*[@aria-label='" + element.getAttribute('aria-label').replace(/'/g, "\\'") + "']" : '',
-                    name: element.getAttribute('name') ? "//*[@name='" + element.getAttribute('name').replace(/'/g, "\\'") + "']" : '',
-                    href: element.getAttribute('href') ? "//*[@href='" + element.getAttribute('href').replace(/'/g, "\\'") + "']" : '',
-                    src: element.getAttribute('src') ? "//*[@src='" + element.getAttribute('src').replace(/'/g, "\\'") + "']" : '',
-                    alt: element.getAttribute('alt') ? "//*[@alt='" + element.getAttribute('alt').replace(/'/g, "\\'") + "']" : '',
-                    title: element.getAttribute('title') ? "//*[@title='" + element.getAttribute('title').replace(/'/g, "\\'") + "']" : ''
-                },
+                visual_xpath: {{
+                    text: displayText ? "//*[text()='" + displayText.replace(/'/g, "\\\\'") + "']" : '',
+                    tag_text: displayText ? "//" + tagName + "[text()='" + displayText.replace(/'/g, "\\\\'") + "']" : '',
+                    tag_contains: displayText ? "//" + tagName + "[contains(text(),'" + displayText.substring(0, 50).replace(/'/g, "\\\\'") + "')]" : '',
+                    placeholder: element.getAttribute('placeholder') ? "//*[@placeholder='" + element.getAttribute('placeholder').replace(/'/g, "\\\\'") + "']" : '',
+                    value: element.getAttribute('value') ? "//*[@value='" + element.getAttribute('value').replace(/'/g, "\\\\'") + "']" : '',
+                    accessibility: element.getAttribute('aria-label') ? "//*[@aria-label='" + element.getAttribute('aria-label').replace(/'/g, "\\\\'") + "']" : '',
+                    name: element.getAttribute('name') ? "//*[@name='" + element.getAttribute('name').replace(/'/g, "\\\\'") + "']" : '',
+                    href: element.getAttribute('href') ? "//*[@href='" + element.getAttribute('href').replace(/'/g, "\\\\'") + "']" : '',
+                    src: element.getAttribute('src') ? "//*[@src='" + element.getAttribute('src').replace(/'/g, "\\\\'") + "']" : '',
+                    alt: element.getAttribute('alt') ? "//*[@alt='" + element.getAttribute('alt').replace(/'/g, "\\\\'") + "']" : '',
+                    title: element.getAttribute('title') ? "//*[@title='" + element.getAttribute('title').replace(/'/g, "\\\\'") + "']" : ''
+                }},
                 relative_xpath: relativeXpath,
                 full_xpath: fullXpath,
                 css_selector: cssSelector,
                 page_url: window.location.href,
                 page_name: document.title
-            };
-            if (window.ws && window.ws.readyState === WebSocket.OPEN) {
+            }};
+            
+            if (window.recheckMode) {{
+                console.log('[XPath Collector] Recheck mode - click ignored');
+                return;
+            }}
+            
+            if (window.ws && window.ws.readyState === WebSocket.OPEN) {{
                 console.log('[XPath Collector] Sending data to server:', clickData.name);
                 window.ws.send(JSON.stringify(clickData));
-            } else {
+            }} else {{
                 console.error('[XPath Collector] WebSocket not ready. State:', window.ws ? window.ws.readyState : 'null');
-            }
-        }, true);
+            }}
+        }}, true);
         window.clickListenerInjected = true;
         console.log('[XPath Collector] Click listener INSTALLED');
-    } else {
+    }} else {{
         console.log('[XPath Collector] Listener already installed, skipping');
-    }
+    }}
 
-    function getRelativeXPath(element) {
+    function getRelativeXPath(element) {{
         if (element.id) return '//*[@id="' + element.id + '"]';
         if (element.className) return '//' + element.tagName.toLowerCase() + '[@class="' + element.className + '"]';
         var path = [];
-        while (element.nodeType === Node.ELEMENT_NODE) {
+        while (element.nodeType === Node.ELEMENT_NODE) {{
             var selector = element.nodeName.toLowerCase();
-            if (element.id) {
+            if (element.id) {{
                 selector += '[@id="' + element.id + '"]';
                 path.unshift(selector);
                 break;
-            } else {
+            }} else {{
                 var sibling = element.previousSibling;
                 var nth = 1;
-                while (sibling) {
+                while (sibling) {{
                     if (sibling.nodeType === Node.ELEMENT_NODE && sibling.nodeName.toLowerCase() === selector) nth++;
                     sibling = sibling.previousSibling;
-                }
+                }}
                 if (nth !== 1) selector += '[' + nth + ']';
-            }
+            }}
             path.unshift(selector);
             element = element.parentNode;
-        }
+        }}
         return path.length ? '/' + path.join('/') : '';
-    }
+    }}
 
-    function getFullXPath(element) {
+    function getFullXPath(element) {{
         var path = [];
-        while (element.nodeType === Node.ELEMENT_NODE) {
+        while (element.nodeType === Node.ELEMENT_NODE) {{
             var selector = element.nodeName.toLowerCase();
-            if (element.id) {
+            if (element.id) {{
                 selector += '[@id="' + element.id + '"]';
                 path.unshift(selector);
                 break;
-            } else {
+            }} else {{
                 var sibling = element.previousSibling;
                 var nth = 1;
-                while (sibling) {
+                while (sibling) {{
                     if (sibling.nodeType === Node.ELEMENT_NODE && sibling.nodeName.toLowerCase() === selector) nth++;
                     sibling = sibling.previousSibling;
-                }
+                }}
                 if (nth !== 1) selector += '[' + nth + ']';
-            }
+            }}
             path.unshift(selector);
             element = element.parentNode;
-        }
+        }}
         return '/' + path.join('/');
-    }
+    }}
 
-    function getCSSSelector(element) {
+    function getCSSSelector(element) {{
         if (element.id) return '#' + element.id;
         if (element.className) return element.tagName.toLowerCase() + '.' + element.className.split(' ').join('.');
         return element.tagName.toLowerCase();
-    }
+    }}
     """
     driver.execute_script(script)
 
@@ -239,7 +309,11 @@ def main():
     global data, output_file, check_event, stop_event
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', help='URL to load')
+    parser.add_argument('--recheck', action='store_true', help='Recheck mode - disable XPath capture')
     args = parser.parse_args()
+    
+    global recheck_mode
+    recheck_mode = args.recheck
 
     with open('config.json', 'r') as f:
         config = json.load(f)
@@ -276,12 +350,26 @@ def main():
     driver.get(load_url)
     inject_click_listener(driver)
     injected_urls.add(load_url)
+    
+    # Start URL monitoring thread now that driver is ready
+    url_monitor_thread = threading.Thread(target=monitor_url_thread, args=(driver, stop_event))
+    url_monitor_thread.daemon = True
+    url_monitor_thread.start()
+    
+    # Start XPath validation thread
+    validation_thread = threading.Thread(target=validate_xpaths_thread, args=(driver, stop_event))
+    validation_thread.daemon = True
+    validation_thread.start()
 
     page_url = driver.current_url
     page_name = driver.title
 
-    print(f"Page loaded: {page_name} - {page_url}")
-    print("Click on elements to capture xpaths. Press Ctrl+C to stop.")
+    if recheck_mode:
+        print(f"RECHECK MODE: Page loaded: {page_name} - {page_url}")
+        print("RECHECK MODE: XPath capture is DISABLED. Navigate to validate existing XPaths.")
+    else:
+        print(f"Page loaded: {page_name} - {page_url}")
+        print("Click on elements to capture xpaths. Press Ctrl+C to stop.")
 
     handled_windows = [driver.current_window_handle]
 

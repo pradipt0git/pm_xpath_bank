@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recheck XPaths - XPath Repository</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        .btn-back {
+            background: #6c757d;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.85em;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-back:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+        .btn-launch {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.2s;
+            display: block;
+            margin: 0 auto 10px auto;
+        }
+        .btn-launch:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-launch.stop {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        .btn-launch.stop:hover {
+            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.4);
+        }
+        .status-message {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            min-height: 20px;
+            transition: opacity 0.3s;
+        }
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status-message.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #recheckContent {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .page-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .page-section.active-page {
+            border: 3px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.3);
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% {
+                border-color: #00ff00;
+                box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), 0 0 30px rgba(0, 255, 0, 0.3);
+            }
+            50% {
+                border-color: #00cc00;
+                box-shadow: 0 0 30px rgba(0, 255, 0, 0.7), 0 0 40px rgba(0, 255, 0, 0.5);
+            }
+        }
+        .page-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        .page-header:hover {
+            background: #5568d3;
+        }
+        .page-refresh-icon {
+            margin-left: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            color: white;
+            display: none;
+            transition: all 0.2s;
+        }
+        .page-refresh-icon:hover {
+            transform: rotate(180deg);
+        }
+        .page-section.active-page .page-refresh-icon {
+            display: inline;
+        }
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+        .toggle-icon.collapsed {
+            transform: rotate(-90deg);
+        }
+        .page-body {
+            padding: 15px;
+        }
+        .page-body.collapsed {
+            display: none;
+        }
+        .recheck-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .recheck-item label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .validation-icon {
+            margin-left: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .validation-icon.valid {
+            color: #28a745;
+        }
+        .validation-icon.invalid {
+            color: #dc3545;
+        }
+        .validation-icon.checking {
+            color: #ffc107;
+        }
+        .validation-icon.pending {
+            color: #999;
+        }
+        .refresh-icon {
+            margin-left: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            color: #667eea;
+            display: none;
+            transition: all 0.2s;
+        }
+        .refresh-icon:hover {
+            color: #5568d3;
+            transform: rotate(90deg);
+        }
+        .page-section.active-page .refresh-icon {
+            display: inline;
+        }
+        .recheck-item input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+        .recheck-item input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .name-display {
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="btn-back">← Back to Main</a>
+        <h1>Recheck XPaths</h1>
+        <button id="launchBtn" class="btn-launch" onclick="launchFirstUrl()">Launch First URL</button>
+        <div id="statusMessage" class="status-message hidden"></div>
+        <div id="recheckContent">
+            <div class="no-data">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        let firstPageUrl = null;
+        let isLaunched = false;
+        let urlPollingInterval = null;
+        let loadedData = null;  // Store loaded data for URL matching
+        let validationResults = {};  // Store validation results by xpath to avoid flickering
+        let lastValidatedPageUrl = null;  // Track which page was last validated
+        
+        function togglePage(header) {
+            const body = header.nextElementSibling;
+            const icon = header.querySelector('.toggle-icon');
+            body.classList.toggle('collapsed');
+            icon.classList.toggle('collapsed');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function loadRecheckData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const filename = urlParams.get('file');
+            
+            if (!filename) {
+                document.getElementById('recheckContent').innerHTML = '<div class="no-data">No file specified</div>';
+                return;
+            }
+
+            fetch('/load_json/' + filename)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    displayRecheckContent(result.data);
+                } else {
+                    document.getElementById('recheckContent').innerHTML = '<div class="no-data">Error loading file: ' + result.message + '</div>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('recheckContent').innerHTML = '<div class="no-data">Error: ' + error.message + '</div>';
+            });
+        }
+
+        function displayRecheckContent(data) {
+            const recheckContent = document.getElementById('recheckContent');
+            loadedData = data;  // Store data globally for URL matching
+            let html = '';
+            
+            // Sort pages by display_order in ascending order
+            const sortedPages = Object.entries(data).sort((a, b) => {
+                const orderA = a[1].display_order || 0;
+                const orderB = b[1].display_order || 0;
+                return orderA - orderB;
+            });
+            
+            // Find the page with display_order = 1
+            for (const [pageUrl, pageData] of sortedPages) {
+                if (pageData.display_order === 1) {
+                    firstPageUrl = pageUrl;
+                }
+                const pageName = pageData.page_name || 'Unnamed Page';
+                const displayName = `${pageName} - ${pageUrl}`;
+                
+                html += `
+                    <div class="page-section" data-page-url="${escapeHtml(pageUrl)}">
+                        <div class="page-header" onclick="togglePage(this)">
+                            <span>${displayName}</span>
+                            <span>
+                                <span class="page-refresh-icon" onclick="event.stopPropagation(); revalidatePage(this);" title="Re-validate all XPaths for this page">↻</span>
+                                <span class="toggle-icon">▼</span>
+                            </span>
+                        </div>
+                        <div class="page-body">
+                `;
+                
+                if (pageData.xpaths && pageData.xpaths.length > 0) {
+                    // Sort xpaths by created_on in ascending order
+                    const sortedXpaths = [...pageData.xpaths].sort((a, b) => {
+                        const dateA = new Date(a.created_on || '1970-01-01');
+                        const dateB = new Date(b.created_on || '1970-01-01');
+                        return dateA - dateB;
+                    });
+                    
+                    sortedXpaths.forEach((xpath, index) => {
+                        html += `
+                            <div class="recheck-item" data-xpath="${escapeHtml(xpath.final_xpath || '')}">
+                                <label>Name:<span class="validation-icon pending" data-validation-icon>-</span><span class="refresh-icon" onclick="revalidateXPath(this)" title="Re-validate this XPath">↻</span></label>
+                                <div class="name-display">${escapeHtml(xpath.name || '')}</div>
+                                
+                                <label>Final XPath:</label>
+                                <input type="text" value="${escapeHtml(xpath.final_xpath || '')}" readonly>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html += '<div class="no-data">No xpaths captured yet</div>';
+                }
+                
+                html += '</div></div>';
+            }
+            
+            if (html === '') {
+                html = '<div class="no-data">No data available</div>';
+            }
+            
+            recheckContent.innerHTML = html;
+        }
+        
+        function pollCurrentUrl() {
+            fetch('/get_current_url')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' && data.url) {
+                        highlightActivePage(data.url);
+                    }
+                })
+                .catch(error => {
+                    console.log('URL polling error:', error);
+                });
+        }
+        
+        function highlightActivePage(currentUrl) {
+            // Remove active class from all sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active-page');
+            });
+            
+            // Find and highlight the matching page section
+            if (loadedData) {
+                for (const [pageUrl, pageData] of Object.entries(loadedData)) {
+                    if (currentUrl.includes(pageUrl) || pageUrl.includes(currentUrl)) {
+                        const section = document.querySelector(`[data-page-url="${pageUrl}"]`);
+                        if (section) {
+                            section.classList.add('active-page');
+                            // Auto-expand the active page
+                            const pageBody = section.querySelector('.page-body');
+                            const toggleIcon = section.querySelector('.toggle-icon');
+                            if (pageBody && pageBody.classList.contains('collapsed')) {
+                                pageBody.classList.remove('collapsed');
+                                if (toggleIcon) toggleIcon.classList.remove('collapsed');
+                            }
+                            // Validate XPaths ONLY if this is a new page (URL changed)
+                            if (lastValidatedPageUrl !== pageUrl) {
+                                validatePageXPaths(section, pageData);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        function revalidateXPath(refreshIcon) {
+            const recheckItem = refreshIcon.closest('.recheck-item');
+            const xpath = recheckItem.getAttribute('data-xpath');
+            const icon = recheckItem.querySelector('[data-validation-icon]');
+            const nameDisplay = recheckItem.querySelector('.name-display');
+            const elementName = nameDisplay ? nameDisplay.textContent : '';
+            
+            // Get page URL from parent section
+            const pageSection = recheckItem.closest('.page-section');
+            const pageUrl = pageSection ? pageSection.getAttribute('data-page-url') : '';
+            
+            if (!xpath) return;
+            
+            // Set to checking state
+            icon.textContent = '⏳';
+            icon.className = 'validation-icon checking';
+            
+            // Validate this single XPath with metadata
+            fetch('/validate_xpaths', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    xpaths_data: [{
+                        xpath: xpath,
+                        name: elementName,
+                        page_url: pageUrl
+                    }]
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success' && data.results.hasOwnProperty(xpath)) {
+                    const isValid = data.results[xpath];
+                    validationResults[xpath] = isValid;
+                    icon.textContent = isValid ? '✓' : '✗';
+                    icon.className = 'validation-icon ' + (isValid ? 'valid' : 'invalid');
+                }
+            })
+            .catch(error => {
+                console.log('Validation error:', error);
+                icon.textContent = '✗';
+                icon.className = 'validation-icon invalid';
+            });
+        }
+        
+        function revalidatePage(refreshIcon) {
+            const pageSection = refreshIcon.closest('.page-section');
+            const pageUrl = pageSection.getAttribute('data-page-url');
+            
+            if (!loadedData || !loadedData[pageUrl]) return;
+            
+            const pageData = loadedData[pageUrl];
+            
+            // Clear validation cache for this page's XPaths
+            if (pageData.xpaths && pageData.xpaths.length > 0) {
+                pageData.xpaths.forEach(xpath => {
+                    if (xpath.final_xpath) {
+                        delete validationResults[xpath.final_xpath];
+                    }
+                });
+            }
+            
+            // Force re-validation by calling validatePageXPaths with delay
+            validatePageXPaths(pageSection, pageData, true);
+        }
+        
+        function validatePageXPaths(section, pageData, forceRevalidate = false) {
+            // Get current page URL
+            const currentPageUrl = section.getAttribute('data-page-url');
+            
+            // Collect all XPaths with metadata from this page
+            const xpathsData = [];
+            if (pageData.xpaths && pageData.xpaths.length > 0) {
+                pageData.xpaths.forEach(xpath => {
+                    if (xpath.final_xpath) {
+                        xpathsData.push({
+                            xpath: xpath.final_xpath,
+                            name: xpath.name || '',
+                            page_url: currentPageUrl
+                        });
+                    }
+                });
+            }
+            
+            if (xpathsData.length === 0) return;
+            
+            // Only show checking state on first validation of this page or forced re-validation
+            const items = section.querySelectorAll('.recheck-item');
+            const isFirstValidation = lastValidatedPageUrl !== currentPageUrl || forceRevalidate;
+            
+            if (isFirstValidation) {
+                items.forEach(item => {
+                    const icon = item.querySelector('[data-validation-icon]');
+                    if (icon) {
+                        icon.textContent = '⏳';
+                        icon.className = 'validation-icon checking';
+                    }
+                });
+                if (!forceRevalidate) {
+                    lastValidatedPageUrl = currentPageUrl;
+                }
+            }
+            
+            // Add delay to wait for page to fully load (2 seconds for first validation, immediate for re-validation)
+            const validationDelay = forceRevalidate ? 0 : 2000;
+            
+            setTimeout(() => {
+                // Call validation endpoint
+                fetch('/validate_xpaths', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ xpaths_data: xpathsData })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Update validation icons only if result changed
+                        items.forEach(item => {
+                            const xpath = item.getAttribute('data-xpath');
+                            const icon = item.querySelector('[data-validation-icon]');
+                            if (icon && xpath && data.results.hasOwnProperty(xpath)) {
+                                const newResult = data.results[xpath];
+                                const previousResult = validationResults[xpath];
+                                
+                                // Only update if result changed or first time or forced
+                                if (forceRevalidate || previousResult === undefined || previousResult !== newResult) {
+                                    validationResults[xpath] = newResult;
+                                    icon.textContent = newResult ? '✓' : '✗';
+                                    icon.className = 'validation-icon ' + (newResult ? 'valid' : 'invalid');
+                                }
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log('Validation error:', error);
+                    // On error, set to error state only if first validation
+                    if (isFirstValidation) {
+                        items.forEach(item => {
+                            const icon = item.querySelector('[data-validation-icon]');
+                            if (icon) {
+                                icon.textContent = '✗';
+                                icon.className = 'validation-icon invalid';
+                            }
+                        });
+                    }
+                });
+            }, validationDelay);
+        }
+        
+        function showMessage(message, isError = false) {
+            const statusMsg = document.getElementById('statusMessage');
+            statusMsg.textContent = message;
+            statusMsg.className = 'status-message ' + (isError ? 'error' : 'success');
+            
+            setTimeout(() => {
+                statusMsg.className = 'status-message hidden';
+            }, 3000);
+        }
+        
+        function launchFirstUrl() {
+            const launchBtn = document.getElementById('launchBtn');
+            
+            if (isLaunched) {
+                // Stop recheck
+                fetch('/stop_recheck', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        showMessage(data.message);
+                        launchBtn.textContent = 'Launch First URL';
+                        launchBtn.classList.remove('stop');
+                        isLaunched = false;
+                        // Stop polling current URL
+                        if (urlPollingInterval) {
+                            clearInterval(urlPollingInterval);
+                            urlPollingInterval = null;
+                        }
+                        // Clear validation cache
+                        validationResults = {};
+                        lastValidatedPageUrl = null;
+                        // Remove all active page highlights
+                        document.querySelectorAll('.page-section').forEach(section => {
+                            section.classList.remove('active-page');
+                        });
+                    } else {
+                        showMessage('Error: ' + data.message, true);
+                    }
+                })
+                .catch(error => {
+                    showMessage('Error: ' + error.message, true);
+                });
+                return;
+            }
+            
+            // Launch browser
+            const urlParams = new URLSearchParams(window.location.search);
+            const filename = urlParams.get('file');
+            
+            if (!filename || !firstPageUrl) {
+                showMessage('No URL available to launch', true);
+                return;
+            }
+            
+            fetch('/launch_recheck', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filename: filename,
+                    url: firstPageUrl
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage(data.message);
+                    launchBtn.textContent = 'Stop Recheck';
+                    launchBtn.classList.add('stop');
+                    isLaunched = true;
+                    // Start polling current URL
+                    urlPollingInterval = setInterval(pollCurrentUrl, 500);
+                } else {
+                    showMessage('Error: ' + data.message, true);
+                }
+            })
+            .catch(error => {
+                showMessage('Error: ' + error.message, true);
+            });
+        }
+
+        // Load data on page load
+        window.onload = loadRecheckData;
+    </script>
+</body>
+</html>

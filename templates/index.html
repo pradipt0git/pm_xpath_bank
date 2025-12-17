@@ -154,17 +154,64 @@
             font-size: 1.8em;
         }
         select {
-            width: 100%;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            font-size: 1em;
-            margin-bottom: 20px;
+            font-size: 1.1em;
             cursor: pointer;
         }
         select:focus {
             outline: none;
             border-color: #667eea;
+        }
+        .file-selector {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .file-selector select {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        .btn-download {
+            background: transparent;
+            color: #667eea;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1.8em;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        .btn-download:hover:not(:disabled) {
+            color: #5568d3;
+            transform: scale(1.2);
+        }
+        .btn-download:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .btn-recheck {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.2s;
+        }
+        .btn-recheck:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        }
+        .btn-recheck:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.6;
         }
         .json-content {
             max-height: 500px;
@@ -333,24 +380,28 @@
 <body>
     <div class="container">
         <h1>XPath Repository</h1>
-        <div class="form-group">
-            <label for="url">Enter URL:</label>
-            <input type="text" id="url" value="{{ default_url }}" placeholder="https://example.com">
-        </div>
-        <div class="button-group">
-            <button id="startBtn" class="btn-start" onclick="startCapture()">Start Capture</button>
-            <button id="refreshBtn" class="btn-refresh" onclick="refreshJsonFile()" disabled>Refresh</button>
-            <button id="stopBtn" class="btn-stop" onclick="stopCapture()">Stop Capture</button>
-        </div>
-        <div id="message" class="message"></div>
+            <div class="form-group">
+                <label for="url">Enter URL:</label>
+                <input type="text" id="url" value="{{ default_url }}" placeholder="https://example.com">
+            </div>
+            <div class="button-group">
+                <button id="startBtn" class="btn-start" onclick="startCapture()">Start Capture</button>
+                <button id="refreshBtn" class="btn-refresh" onclick="refreshJsonFile()" disabled>Refresh</button>
+                <button id="stopBtn" class="btn-stop" onclick="stopCapture()">Stop Capture</button>
+            </div>
+            <div id="message" class="message"></div>
 
-        <div class="viewer-section">
+            <div class="viewer-section">
             <h2>Captured XPaths</h2>
             <div class="form-group">
                 <label for="jsonFiles">Select JSON File:</label>
-                <select id="jsonFiles" onchange="loadJsonFile()">
-                    <option value="">-- Select a file --</option>
-                </select>
+                <div class="file-selector">
+                    <select id="jsonFiles" onchange="loadJsonFile()">
+                        <option value="">-- Select a file --</option>
+                    </select>
+                    <button id="downloadBtn" class="btn-download" onclick="downloadCSV()" disabled title="Download as CSV">📥</button>
+                    <button id="recheckBtn" class="btn-recheck" onclick="openRecheckPage()" disabled>Recheck</button>
+                </div>
             </div>
             <div id="jsonContent" class="json-content">
                 <div class="no-data">Select a JSON file to view captured xpaths</div>
@@ -446,6 +497,28 @@
             }
         }
         
+        function downloadCSV() {
+            const filename = document.getElementById('jsonFiles').value;
+            if (!filename) {
+                showMessage('Please select a JSON file first', 'error');
+                return;
+            }
+            
+            // Create download link and trigger download
+            window.location.href = '/download_csv/' + filename;
+        }
+        
+        function openRecheckPage() {
+            const filename = document.getElementById('jsonFiles').value;
+            if (!filename) {
+                showMessage('Please select a JSON file first', 'error');
+                return;
+            }
+            
+            // Navigate to recheck page with filename parameter
+            window.location.href = '/recheck?file=' + encodeURIComponent(filename);
+        }
+        
         function deleteXPath(filename, pageUrl, index) {
             if (!confirm('Are you sure you want to delete this XPath?')) {
                 return;
@@ -496,15 +569,21 @@
             const filename = document.getElementById('jsonFiles').value;
             const contentDiv = document.getElementById('jsonContent');
             const refreshBtn = document.getElementById('refreshBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const recheckBtn = document.getElementById('recheckBtn');
             
             if (!filename) {
                 contentDiv.innerHTML = '<div class="no-data">Select a JSON file to view captured xpaths</div>';
                 refreshBtn.disabled = true;
+                downloadBtn.disabled = true;
+                recheckBtn.disabled = true;
                 return;
             }
             
-            // Enable refresh button when a file is selected
+            // Enable refresh, download, and recheck buttons when a file is selected
             refreshBtn.disabled = false;
+            downloadBtn.disabled = false;
+            recheckBtn.disabled = false;
 
             fetch('/load_json/' + filename)
             .then(response => response.json())
@@ -521,7 +600,14 @@
             const contentDiv = document.getElementById('jsonContent');
             let html = '';
             
-            for (const [pageUrl, pageData] of Object.entries(data)) {
+            // Sort pages by display_order in ascending order
+            const sortedPages = Object.entries(data).sort((a, b) => {
+                const orderA = a[1].display_order || 0;
+                const orderB = b[1].display_order || 0;
+                return orderA - orderB;
+            });
+            
+            for (const [pageUrl, pageData] of sortedPages) {
                 const pageName = pageData.page_name || 'Unnamed Page';
                 const displayName = `${pageName} - ${pageUrl}`;
                 

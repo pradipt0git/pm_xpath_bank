@@ -1,0 +1,284 @@
+{
+    "https://www.ibm.com/in-en": {
+        "page_url": "https://www.ibm.com/in-en",
+        "page_full_url": "https://www.ibm.com/in-en",
+        "page_name": "IBM",
+        "display_order": 1,
+        "xpaths": [
+            {
+                "name": "close icon",
+                "visual_xpath": {
+                    "text": "",
+                    "tag_text": "",
+                    "tag_contains": "",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "//*[@src='https://consent.trustarc.com/get?name=ibm_close_icon.svg']",
+                    "alt": "//*[@alt='close icon']",
+                    "title": ""
+                },
+                "relative_xpath": "//*[@id=\"truste-consent-close\"]",
+                "full_xpath": "/img[@id=\"truste-consent-close\"]",
+                "css_selector": "#truste-consent-close",
+                "custom_xpath": "",
+                "final_xpath": "//*[@src='https://consent.trustarc.com/get?name=ibm_close_icon.svg']",
+                "created_on": "2025-12-16 20:21:03"
+            },
+            {
+                "name": "Recommended for you",
+                "visual_xpath": {
+                    "text": "//*[text()='Recommended for you']",
+                    "tag_text": "//h5[text()='Recommended for you']",
+                    "tag_contains": "//h5[contains(text(),'Recommended for you')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//h5[@class=\"expressive-heading-02 col-8 \"]",
+                "full_xpath": "/div[@id=\"container-edef0c01b1\"]/div/h5",
+                "css_selector": "h5.expressive-heading-02.col-8.",
+                "custom_xpath": "",
+                "final_xpath": "//h5[text()='Recommended for you']",
+                "created_on": "2025-12-17 15:51:08"
+            },
+            {
+                "name": "Ferrari",
+                "visual_xpath": {
+                    "text": "//*[text()='Ferrari']",
+                    "tag_text": "//span[text()='Ferrari']",
+                    "tag_contains": "//span[contains(text(),'Ferrari')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//span[@class=\"cmp-accordion__title-container\"]",
+                "full_xpath": "/button[@id=\"accordion-c89b7a1a1c-item-9a0379d73f-button\"]/span",
+                "css_selector": "span.cmp-accordion__title-container",
+                "custom_xpath": "",
+                "final_xpath": "//span[text()='Ferrari']",
+                "created_on": "2025-12-17 15:51:24"
+            },
+            {
+                "name": "Create personalized AI agents and assistants",
+                "visual_xpath": {
+                    "text": "//*[text()='Create personalized AI agents and assistants']",
+                    "tag_text": "//span[text()='Create personalized AI agents and assistants']",
+                    "tag_contains": "//span[contains(text(),'Create personalized AI agents and assistants')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "/div[@id=\"mbox-leadspace_cta\"]/c4d-button-group/a/c4d-button-group-item/span",
+                "full_xpath": "/div[@id=\"mbox-leadspace_cta\"]/c4d-button-group/a/c4d-button-group-item/span",
+                "css_selector": "span",
+                "custom_xpath": "",
+                "final_xpath": "//span[text()='Create personalized AI agents and assistants']",
+                "created_on": "2025-12-17 15:52:03"
+            }
+        ]
+    },
+    "devtools://devtools/bundled/devtools_app.html?remoteBase=https://msedgedevtools.microsoft.com/serve_file/@788579717f688c0cf5ee6a0a56386924d0af7ae8/&targetType=tab&can_dock=true&panel=elements&firstLaunch=true&hasOtherClients=true&isFeedbackEnabled=true&msEdgeDevToolsMicroFeedback=true&isChatEnabled=true&msEdgeCSSCopilot=true&enabledExperiments=msEdgeDevToolsNetworkConsole;layersIn3DView;keyboardShortcutEditor;msEdgeVSCodeThemes;msEdgeDevToolsDetachedElements;msEdgeDynamicWelcome;msEdgeAIExplainConsoleError;msEdgeCSSCopilot": {
+        "page_url": "devtools://devtools/bundled/devtools_app.html?remoteBase=https://msedgedevtools.microsoft.com/serve_file/@788579717f688c0cf5ee6a0a56386924d0af7ae8/&targetType=tab&can_dock=true&panel=elements&firstLaunch=true&hasOtherClients=true&isFeedbackEnabled=true&msEdgeDevToolsMicroFeedback=true&isChatEnabled=true&msEdgeCSSCopilot=true&enabledExperiments=msEdgeDevToolsNetworkConsole;layersIn3DView;keyboardShortcutEditor;msEdgeVSCodeThemes;msEdgeDevToolsDetachedElements;msEdgeDynamicWelcome;msEdgeAIExplainConsoleError;msEdgeCSSCopilot",
+        "page_full_url": "devtools://devtools/bundled/devtools_app.html?remoteBase=https://msedgedevtools.microsoft.com/serve_file/@788579717f688c0cf5ee6a0a56386924d0af7ae8/&targetType=tab&can_dock=true&panel=elements&firstLaunch=true&hasOtherClients=true&isFeedbackEnabled=true&msEdgeDevToolsMicroFeedback=true&isChatEnabled=true&msEdgeCSSCopilot=true&enabledExperiments=msEdgeDevToolsNetworkConsole;layersIn3DView;keyboardShortcutEditor;msEdgeVSCodeThemes;msEdgeDevToolsDetachedElements;msEdgeDynamicWelcome;msEdgeAIExplainConsoleError;msEdgeCSSCopilot",
+        "page_name": "DevTools",
+        "display_order": 2,
+        "xpaths": [
+            {
+                "name": "top\nDefault levels\n5 hidden\n\ufeff\nVM866:63 \n[XPath Collector] Listener already installed, skipping\nVM189:18 \n[XPath Collector] Click detected on: H3\nVM189:54 \n[XPath Collector] Sending data to server: Ferrari\n\ufeff\n.",
+                "visual_xpath": {
+                    "text": "//*[text()='top\nDefault levels\n5 hidden\n\ufeff\nVM866:63 \n[XPath Collector] Listener already installed, skipping\nVM189:18 \n[XPath Collector] Click detected on: H3\nVM189:54 \n[XPath Collector] Sending data to server: Ferrari\n\ufeff\n.']",
+                    "tag_text": "//div[text()='top\nDefault levels\n5 hidden\n\ufeff\nVM866:63 \n[XPath Collector] Listener already installed, skipping\nVM189:18 \n[XPath Collector] Click detected on: H3\nVM189:54 \n[XPath Collector] Sending data to server: Ferrari\n\ufeff\n.']",
+                    "tag_contains": "//div[contains(text(),'top\nDefault levels\n5 hidden\n\ufeff\nVM866:63 \n[XPath Col')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//div[@class=\"vbox flex-auto split-widget\"]",
+                "full_xpath": "/body[@id=\"-blink-dev-tools\"]/div[2]/div",
+                "css_selector": "div.vbox.flex-auto.split-widget",
+                "custom_xpath": "",
+                "final_xpath": "//div[text()='top\nDefault levels\n5 hidden\n\ufeff\nVM866:63 \n[XPath Collector] Listener already installed, skipping\nVM189:18 \n[XPath Collector] Click detected on: H3\nVM189:54 \n[XPath Collector] Sending data to server: Ferrari\n\ufeff\n.']",
+                "created_on": "2025-12-17 15:27:06"
+            }
+        ]
+    },
+    "https://www.ibm.com/products/watsonx-orchestrate?hp1": {
+        "page_url": "https://www.ibm.com/products/watsonx-orchestrate?hp1",
+        "page_full_url": "https://www.ibm.com/products/watsonx-orchestrate?hp1",
+        "page_name": "IBM watsonx Orchestrate",
+        "display_order": 3,
+        "xpaths": [
+            {
+                "name": "Put AI to work",
+                "visual_xpath": {
+                    "text": "//*[text()='Put AI to work']",
+                    "tag_text": "//span[text()='Put AI to work']",
+                    "tag_contains": "//span[contains(text(),'Put AI to work')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//span[@class=\"enhanced-title text-color-gradient-90-blue-to-purple\"]",
+                "full_xpath": "/div[@id=\"table-of-contents-3fafbc5edb\"]/div[2]/div/div/h2/span",
+                "css_selector": "span.enhanced-title.text-color-gradient-90-blue-to-purple",
+                "custom_xpath": "",
+                "final_xpath": "//span[text()='Put AI to work']",
+                "created_on": "2025-12-17 15:52:19"
+            }
+        ]
+    },
+    "https://www.ibm.com/consulting?lnk=L0G": {
+        "page_url": "https://www.ibm.com/consulting?lnk=L0G",
+        "page_full_url": "https://www.ibm.com/consulting?lnk=L0G",
+        "page_name": "Business Consulting Services | IBM",
+        "display_order": 4,
+        "xpaths": [
+            {
+                "name": "close icon",
+                "visual_xpath": {
+                    "text": "",
+                    "tag_text": "",
+                    "tag_contains": "",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "//*[@src='https://consent.trustarc.com/get?name=ibm_close_icon.svg']",
+                    "alt": "//*[@alt='close icon']",
+                    "title": ""
+                },
+                "relative_xpath": "//*[@id=\"truste-consent-close\"]",
+                "full_xpath": "/img[@id=\"truste-consent-close\"]",
+                "css_selector": "#truste-consent-close",
+                "custom_xpath": "",
+                "final_xpath": "//*[@src='https://consent.trustarc.com/get?name=ibm_close_icon.svg']",
+                "created_on": "2025-12-17 18:19:46"
+            },
+            {
+                "name": "IBM Consulting",
+                "visual_xpath": {
+                    "text": "//*[text()='IBM Consulting']",
+                    "tag_text": "//h1[text()='IBM Consulting']",
+                    "tag_contains": "//h1[contains(text(),'IBM Consulting')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//h1[@class=\"cmp-leadspace__heading \"]",
+                "full_xpath": "/div[@id=\"mbox-leadspace-bg\"]/div/section/div/div/div/div/h1",
+                "css_selector": "h1.cmp-leadspace__heading.",
+                "custom_xpath": "",
+                "final_xpath": "//h1[text()='IBM Consulting']",
+                "created_on": "2025-12-17 18:19:48"
+            },
+            {
+                "name": "operate",
+                "visual_xpath": {
+                    "text": "//*[text()='operate']",
+                    "tag_text": "//a[text()='operate']",
+                    "tag_contains": "//a[contains(text(),'operate')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "//*[@href='https://www.ibm.com/consulting/bpo']",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "/div[@id=\"rich-text-09abc05437\"]/p/a[4]",
+                "full_xpath": "/div[@id=\"rich-text-09abc05437\"]/p/a[4]",
+                "css_selector": "a",
+                "custom_xpath": "",
+                "final_xpath": "//a[text()='operate']",
+                "created_on": "2025-12-17 18:19:53"
+            }
+        ]
+    },
+    "https://www.ibm.com/consulting/bpo": {
+        "page_url": "https://www.ibm.com/consulting/bpo",
+        "page_full_url": "https://www.ibm.com/consulting/bpo",
+        "page_name": "Business Process Outsourcing (BPO) Consulting Services | IBM",
+        "display_order": 5,
+        "xpaths": [
+            {
+                "name": "Agentic AI in Action: Transforming the Future of Business Operations\n\nExplore how agentic AI elevates business operations through seamless human-AI collaboration. Explore key insights in the IBV study.\n\nAgentic AI for Business Study\n\nIBM's approach to business process outsourcing starts with reimagining operational workflows by infusing\u00a0Agentic\u00a0AI and process automation to drive performance, resilience, and productivity.\u00a0We unlock value faster with pre-built cutting-edge AI\u00a0assets, assistants and agents on a global AI services\u00a0delivery platform.\n\nOur BPO solutions accelerate time to value, elevate skills and deliver a consumer-grade experience, enabling scalability and more efficient business outcomes. Innovate alongside our domain experts through a personalized approach to redesigning core processes and systems while de-risking operations. We help clients reimagine essential business operations to deliver business insights that create and maintain a competitive edge.\n\nTransforming BPO with AI: IBM\u2019s approach to BPO services\nRead Moor Insights Report\nWhat's new\nHow COOs are reinventing operations with AI, data, and innovation\nIBM supercharges client value and consultant work with IBM Consulting Advantage, an AI services platform with a library of assistants\nHR Operations\nIBM is positioned as \u201cLeader\u201d by Everest Group in Multi-Process Human Resources Outsourcing (MPHRO) Services\nProcurement Operations\nIBM named a Leader in the 2024 HFS Horizons report on leading Sourcing and Procurement Service Providers\nAI Services\nEverest Group Artificial Intelligence (AI) and Generative AI Services PEAK Matrix\u00ae Assessment 2024\nIBM positioned as a Leader in the 2025 Gartner\u00ae Magic Quadrant\u2122 for Finance and Accounting BPO\n\nIBM has been named a Leader in the 2025 Gartner Magic Quadrant for Finance and Accounting Business Process Outsourcing (F&A BPO), acknowledging our commitment to delivering innovative, for-purpose solutions that empower businesses to transform their finance operations effectively.\n\nLearn what makes it possible \nIBM brings deep BPO industry expertise, partnerships and experience to transform end-to-end processes, helping businesses unlock value with AI agents and assets.\nAI-driven finance business process outsourcing services\n\nWith 30,000+ skilled finance and accounting industry practitioners, we can help unleash the value of AI-driven finance, and deliver demonstrable outcomes across financial planning and analytics, procure to pay, order to cash, and record to report.\n\nReimagine your finance operations \nModern talent and HR outsourcing\n\nOur HR and Talent BPO services combine deep process and advanced technology expertise to help you create the essential AI-driven HR processes that result in better customer experiences and cost savings.\n\nExplore an AI-first approach to modern HR operations \nTransform your talent operations with AI\n\nUsing AI-powered outsourcing services, we\u2019ll help you achieve your hiring needs, develop the best in-house talent, define skilling and retention strategies, transform learning experiences and bridge skill gaps to help unlock your workforce potential.\n\nTransform your talent acquisition and skills strategies with AI \nAI-driven Procurement transformation\n\nThe expertise to infuse Generative AI and automation into core procurement processes, enabling better real-time visibility, decision-making, and a deeper understanding of spend, contract management, strategic sourcing,\u00a0supply chain, and pricing.\n\nReimagine you procurement operations \nCustomer service transformation\n\nWith AI for customer service, IBM Consulting helps organizations develop a data and AI strategy to transform the customer interaction and empower their employees core competencies, delight customers and unlock new revenue streams for improved profitability.\n\nUnlock efficiency and supercharge your agents with generative AI \nTransform your industry operations with the right balance of people, data, and AI\n\nBoost revenue, enhance customer experience, and raise customer satisfaction for insurance, banking, financial services and more with IBM BPO services.\n\nIndustries in the AI era \nPepsiCo's journey towards responsibly scaling AI\nRead how IBM Consulting helped PepsiCo establish a responsible AI framework, create a unified AI platform, and more.\nLearn more\nAnheuser-Busch\nAB InBev alleviates its complicated HR landscape, reinvests in more value-added services, and is operating more cost-effectively with the help of IBM Consulting.\nExplore the approach\nInsights\n\nGet the best of IBM in your inbox. Select from our collection of curated newsletters that deliver thought-provoking insights on information technology emerging trends.\n\nSubscribe now\nThe CEO's Guide to Generative AI\nAs generative AI continues to rapidly evolve, operation teams can become an economy growth engine for the business.\nRead about it here\nGBS organizations of the future\nLearn how to reimagine your shared services by cultivating smarter operations that leverage data and insights for enhanced value creation.\nLearn what makes it possible\nThe power of AI & Automation: Intelligent workflows\n92% of polled executives agree that their organization\u2019s workflows will be digitized and will leverage AI-enabled automation by 2025\nLearn more here\nLearn why finance transformation propels business value\nAligning business functions to support agility, drive business outcomes, and enriching data are key factors that make digital transformation\nRead about it here\nApplication management for hybrid cloud\n\nComplete hybrid cloud management services to accelerate your cloud journey to unleash full potential of your investments.\n\nLearn more \nIBM Business Automation Workflow\n\nAutomate your digital workflows to increase productivity, efficiency and data analytics, on premises or on cloud.\n\nLearn more \nIBM watsonx Assistant\n\nDeliver consistent and intelligent customer support across all channels and touch points with conversational AI.\n\nLearn more \nFinance transformation consulting\n\nMigrate legacy ERP apps to the cloud and turn finance into a competitive advantage.\n\nLearn more \nTalent management consulting\n\nInspire your workforce and meet your complex HR needs with a people-centric approach to talent management.\n\nLearn more \nIBM Consulting Advantage\n\nIBM Consulting Advantage helps enable deeper insights and improved efficiency compared to traditional consultancy approaches.\n\nLearn more \nSubscribe to Think Newsletter\n\nKeep up with the latest news and insights from AI,security,\u00a0 automation, data and infrastructure straight to your inbox.\n\nSubscribe now\nKnow more\nExplore career opportunities\n\nJoin our team of dedicated, innovative people who are bringing positive change to work and the world.\u00a0\n\n\n\nRegister now \nVisit IBM Consulting\u2019s resources page\n\nSee our latest collection of reports, guidebooks, and thought leadership papers to help grow your business.\n\nLearn more",
+                "visual_xpath": {
+                    "text": "//*[text()='Agentic AI in Action: Transforming the Future of Business Operations\n\nExplore how agentic AI elevates business operations through seamless human-AI collaboration. Explore key insights in the IBV study.\n\nAgentic AI for Business Study\n\nIBM\\'s approach to business process outsourcing starts with reimagining operational workflows by infusing\u00a0Agentic\u00a0AI and process automation to drive performance, resilience, and productivity.\u00a0We unlock value faster with pre-built cutting-edge AI\u00a0assets, assistants and agents on a global AI services\u00a0delivery platform.\n\nOur BPO solutions accelerate time to value, elevate skills and deliver a consumer-grade experience, enabling scalability and more efficient business outcomes. Innovate alongside our domain experts through a personalized approach to redesigning core processes and systems while de-risking operations. We help clients reimagine essential business operations to deliver business insights that create and maintain a competitive edge.\n\nTransforming BPO with AI: IBM\u2019s approach to BPO services\nRead Moor Insights Report\nWhat\\'s new\nHow COOs are reinventing operations with AI, data, and innovation\nIBM supercharges client value and consultant work with IBM Consulting Advantage, an AI services platform with a library of assistants\nHR Operations\nIBM is positioned as \u201cLeader\u201d by Everest Group in Multi-Process Human Resources Outsourcing (MPHRO) Services\nProcurement Operations\nIBM named a Leader in the 2024 HFS Horizons report on leading Sourcing and Procurement Service Providers\nAI Services\nEverest Group Artificial Intelligence (AI) and Generative AI Services PEAK Matrix\u00ae Assessment 2024\nIBM positioned as a Leader in the 2025 Gartner\u00ae Magic Quadrant\u2122 for Finance and Accounting BPO\n\nIBM has been named a Leader in the 2025 Gartner Magic Quadrant for Finance and Accounting Business Process Outsourcing (F&A BPO), acknowledging our commitment to delivering innovative, for-purpose solutions that empower businesses to transform their finance operations effectively.\n\nLearn what makes it possible \nIBM brings deep BPO industry expertise, partnerships and experience to transform end-to-end processes, helping businesses unlock value with AI agents and assets.\nAI-driven finance business process outsourcing services\n\nWith 30,000+ skilled finance and accounting industry practitioners, we can help unleash the value of AI-driven finance, and deliver demonstrable outcomes across financial planning and analytics, procure to pay, order to cash, and record to report.\n\nReimagine your finance operations \nModern talent and HR outsourcing\n\nOur HR and Talent BPO services combine deep process and advanced technology expertise to help you create the essential AI-driven HR processes that result in better customer experiences and cost savings.\n\nExplore an AI-first approach to modern HR operations \nTransform your talent operations with AI\n\nUsing AI-powered outsourcing services, we\u2019ll help you achieve your hiring needs, develop the best in-house talent, define skilling and retention strategies, transform learning experiences and bridge skill gaps to help unlock your workforce potential.\n\nTransform your talent acquisition and skills strategies with AI \nAI-driven Procurement transformation\n\nThe expertise to infuse Generative AI and automation into core procurement processes, enabling better real-time visibility, decision-making, and a deeper understanding of spend, contract management, strategic sourcing,\u00a0supply chain, and pricing.\n\nReimagine you procurement operations \nCustomer service transformation\n\nWith AI for customer service, IBM Consulting helps organizations develop a data and AI strategy to transform the customer interaction and empower their employees core competencies, delight customers and unlock new revenue streams for improved profitability.\n\nUnlock efficiency and supercharge your agents with generative AI \nTransform your industry operations with the right balance of people, data, and AI\n\nBoost revenue, enhance customer experience, and raise customer satisfaction for insurance, banking, financial services and more with IBM BPO services.\n\nIndustries in the AI era \nPepsiCo\\'s journey towards responsibly scaling AI\nRead how IBM Consulting helped PepsiCo establish a responsible AI framework, create a unified AI platform, and more.\nLearn more\nAnheuser-Busch\nAB InBev alleviates its complicated HR landscape, reinvests in more value-added services, and is operating more cost-effectively with the help of IBM Consulting.\nExplore the approach\nInsights\n\nGet the best of IBM in your inbox. Select from our collection of curated newsletters that deliver thought-provoking insights on information technology emerging trends.\n\nSubscribe now\nThe CEO\\'s Guide to Generative AI\nAs generative AI continues to rapidly evolve, operation teams can become an economy growth engine for the business.\nRead about it here\nGBS organizations of the future\nLearn how to reimagine your shared services by cultivating smarter operations that leverage data and insights for enhanced value creation.\nLearn what makes it possible\nThe power of AI & Automation: Intelligent workflows\n92% of polled executives agree that their organization\u2019s workflows will be digitized and will leverage AI-enabled automation by 2025\nLearn more here\nLearn why finance transformation propels business value\nAligning business functions to support agility, drive business outcomes, and enriching data are key factors that make digital transformation\nRead about it here\nApplication management for hybrid cloud\n\nComplete hybrid cloud management services to accelerate your cloud journey to unleash full potential of your investments.\n\nLearn more \nIBM Business Automation Workflow\n\nAutomate your digital workflows to increase productivity, efficiency and data analytics, on premises or on cloud.\n\nLearn more \nIBM watsonx Assistant\n\nDeliver consistent and intelligent customer support across all channels and touch points with conversational AI.\n\nLearn more \nFinance transformation consulting\n\nMigrate legacy ERP apps to the cloud and turn finance into a competitive advantage.\n\nLearn more \nTalent management consulting\n\nInspire your workforce and meet your complex HR needs with a people-centric approach to talent management.\n\nLearn more \nIBM Consulting Advantage\n\nIBM Consulting Advantage helps enable deeper insights and improved efficiency compared to traditional consultancy approaches.\n\nLearn more \nSubscribe to Think Newsletter\n\nKeep up with the latest news and insights from AI,security,\u00a0 automation, data and infrastructure straight to your inbox.\n\nSubscribe now\nKnow more\nExplore career opportunities\n\nJoin our team of dedicated, innovative people who are bringing positive change to work and the world.\u00a0\n\n\n\nRegister now \nVisit IBM Consulting\u2019s resources page\n\nSee our latest collection of reports, guidebooks, and thought leadership papers to help grow your business.\n\nLearn more']",
+                    "tag_text": "//c4d-table-of-contents[text()='Agentic AI in Action: Transforming the Future of Business Operations\n\nExplore how agentic AI elevates business operations through seamless human-AI collaboration. Explore key insights in the IBV study.\n\nAgentic AI for Business Study\n\nIBM\\'s approach to business process outsourcing starts with reimagining operational workflows by infusing\u00a0Agentic\u00a0AI and process automation to drive performance, resilience, and productivity.\u00a0We unlock value faster with pre-built cutting-edge AI\u00a0assets, assistants and agents on a global AI services\u00a0delivery platform.\n\nOur BPO solutions accelerate time to value, elevate skills and deliver a consumer-grade experience, enabling scalability and more efficient business outcomes. Innovate alongside our domain experts through a personalized approach to redesigning core processes and systems while de-risking operations. We help clients reimagine essential business operations to deliver business insights that create and maintain a competitive edge.\n\nTransforming BPO with AI: IBM\u2019s approach to BPO services\nRead Moor Insights Report\nWhat\\'s new\nHow COOs are reinventing operations with AI, data, and innovation\nIBM supercharges client value and consultant work with IBM Consulting Advantage, an AI services platform with a library of assistants\nHR Operations\nIBM is positioned as \u201cLeader\u201d by Everest Group in Multi-Process Human Resources Outsourcing (MPHRO) Services\nProcurement Operations\nIBM named a Leader in the 2024 HFS Horizons report on leading Sourcing and Procurement Service Providers\nAI Services\nEverest Group Artificial Intelligence (AI) and Generative AI Services PEAK Matrix\u00ae Assessment 2024\nIBM positioned as a Leader in the 2025 Gartner\u00ae Magic Quadrant\u2122 for Finance and Accounting BPO\n\nIBM has been named a Leader in the 2025 Gartner Magic Quadrant for Finance and Accounting Business Process Outsourcing (F&A BPO), acknowledging our commitment to delivering innovative, for-purpose solutions that empower businesses to transform their finance operations effectively.\n\nLearn what makes it possible \nIBM brings deep BPO industry expertise, partnerships and experience to transform end-to-end processes, helping businesses unlock value with AI agents and assets.\nAI-driven finance business process outsourcing services\n\nWith 30,000+ skilled finance and accounting industry practitioners, we can help unleash the value of AI-driven finance, and deliver demonstrable outcomes across financial planning and analytics, procure to pay, order to cash, and record to report.\n\nReimagine your finance operations \nModern talent and HR outsourcing\n\nOur HR and Talent BPO services combine deep process and advanced technology expertise to help you create the essential AI-driven HR processes that result in better customer experiences and cost savings.\n\nExplore an AI-first approach to modern HR operations \nTransform your talent operations with AI\n\nUsing AI-powered outsourcing services, we\u2019ll help you achieve your hiring needs, develop the best in-house talent, define skilling and retention strategies, transform learning experiences and bridge skill gaps to help unlock your workforce potential.\n\nTransform your talent acquisition and skills strategies with AI \nAI-driven Procurement transformation\n\nThe expertise to infuse Generative AI and automation into core procurement processes, enabling better real-time visibility, decision-making, and a deeper understanding of spend, contract management, strategic sourcing,\u00a0supply chain, and pricing.\n\nReimagine you procurement operations \nCustomer service transformation\n\nWith AI for customer service, IBM Consulting helps organizations develop a data and AI strategy to transform the customer interaction and empower their employees core competencies, delight customers and unlock new revenue streams for improved profitability.\n\nUnlock efficiency and supercharge your agents with generative AI \nTransform your industry operations with the right balance of people, data, and AI\n\nBoost revenue, enhance customer experience, and raise customer satisfaction for insurance, banking, financial services and more with IBM BPO services.\n\nIndustries in the AI era \nPepsiCo\\'s journey towards responsibly scaling AI\nRead how IBM Consulting helped PepsiCo establish a responsible AI framework, create a unified AI platform, and more.\nLearn more\nAnheuser-Busch\nAB InBev alleviates its complicated HR landscape, reinvests in more value-added services, and is operating more cost-effectively with the help of IBM Consulting.\nExplore the approach\nInsights\n\nGet the best of IBM in your inbox. Select from our collection of curated newsletters that deliver thought-provoking insights on information technology emerging trends.\n\nSubscribe now\nThe CEO\\'s Guide to Generative AI\nAs generative AI continues to rapidly evolve, operation teams can become an economy growth engine for the business.\nRead about it here\nGBS organizations of the future\nLearn how to reimagine your shared services by cultivating smarter operations that leverage data and insights for enhanced value creation.\nLearn what makes it possible\nThe power of AI & Automation: Intelligent workflows\n92% of polled executives agree that their organization\u2019s workflows will be digitized and will leverage AI-enabled automation by 2025\nLearn more here\nLearn why finance transformation propels business value\nAligning business functions to support agility, drive business outcomes, and enriching data are key factors that make digital transformation\nRead about it here\nApplication management for hybrid cloud\n\nComplete hybrid cloud management services to accelerate your cloud journey to unleash full potential of your investments.\n\nLearn more \nIBM Business Automation Workflow\n\nAutomate your digital workflows to increase productivity, efficiency and data analytics, on premises or on cloud.\n\nLearn more \nIBM watsonx Assistant\n\nDeliver consistent and intelligent customer support across all channels and touch points with conversational AI.\n\nLearn more \nFinance transformation consulting\n\nMigrate legacy ERP apps to the cloud and turn finance into a competitive advantage.\n\nLearn more \nTalent management consulting\n\nInspire your workforce and meet your complex HR needs with a people-centric approach to talent management.\n\nLearn more \nIBM Consulting Advantage\n\nIBM Consulting Advantage helps enable deeper insights and improved efficiency compared to traditional consultancy approaches.\n\nLearn more \nSubscribe to Think Newsletter\n\nKeep up with the latest news and insights from AI,security,\u00a0 automation, data and infrastructure straight to your inbox.\n\nSubscribe now\nKnow more\nExplore career opportunities\n\nJoin our team of dedicated, innovative people who are bringing positive change to work and the world.\u00a0\n\n\n\nRegister now \nVisit IBM Consulting\u2019s resources page\n\nSee our latest collection of reports, guidebooks, and thought leadership papers to help grow your business.\n\nLearn more']",
+                    "tag_contains": "//c4d-table-of-contents[contains(text(),'Agentic AI in Action: Transforming the Future of B')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "//c4d-table-of-contents[@class=\"cmp-table-of-contents  \"]",
+                "full_xpath": "/div[@id=\"container-c0d1322266\"]/div[5]/c4d-table-of-contents",
+                "css_selector": "c4d-table-of-contents.cmp-table-of-contents..",
+                "custom_xpath": "",
+                "final_xpath": "//c4d-table-of-contents[text()='Agentic AI in Action: Transforming the Future of Business Operations\n\nExplore how agentic AI elevates business operations through seamless human-AI collaboration. Explore key insights in the IBV study.\n\nAgentic AI for Business Study\n\nIBM\\'s approach to business process outsourcing starts with reimagining operational workflows by infusing\u00a0Agentic\u00a0AI and process automation to drive performance, resilience, and productivity.\u00a0We unlock value faster with pre-built cutting-edge AI\u00a0assets, assistants and agents on a global AI services\u00a0delivery platform.\n\nOur BPO solutions accelerate time to value, elevate skills and deliver a consumer-grade experience, enabling scalability and more efficient business outcomes. Innovate alongside our domain experts through a personalized approach to redesigning core processes and systems while de-risking operations. We help clients reimagine essential business operations to deliver business insights that create and maintain a competitive edge.\n\nTransforming BPO with AI: IBM\u2019s approach to BPO services\nRead Moor Insights Report\nWhat\\'s new\nHow COOs are reinventing operations with AI, data, and innovation\nIBM supercharges client value and consultant work with IBM Consulting Advantage, an AI services platform with a library of assistants\nHR Operations\nIBM is positioned as \u201cLeader\u201d by Everest Group in Multi-Process Human Resources Outsourcing (MPHRO) Services\nProcurement Operations\nIBM named a Leader in the 2024 HFS Horizons report on leading Sourcing and Procurement Service Providers\nAI Services\nEverest Group Artificial Intelligence (AI) and Generative AI Services PEAK Matrix\u00ae Assessment 2024\nIBM positioned as a Leader in the 2025 Gartner\u00ae Magic Quadrant\u2122 for Finance and Accounting BPO\n\nIBM has been named a Leader in the 2025 Gartner Magic Quadrant for Finance and Accounting Business Process Outsourcing (F&A BPO), acknowledging our commitment to delivering innovative, for-purpose solutions that empower businesses to transform their finance operations effectively.\n\nLearn what makes it possible \nIBM brings deep BPO industry expertise, partnerships and experience to transform end-to-end processes, helping businesses unlock value with AI agents and assets.\nAI-driven finance business process outsourcing services\n\nWith 30,000+ skilled finance and accounting industry practitioners, we can help unleash the value of AI-driven finance, and deliver demonstrable outcomes across financial planning and analytics, procure to pay, order to cash, and record to report.\n\nReimagine your finance operations \nModern talent and HR outsourcing\n\nOur HR and Talent BPO services combine deep process and advanced technology expertise to help you create the essential AI-driven HR processes that result in better customer experiences and cost savings.\n\nExplore an AI-first approach to modern HR operations \nTransform your talent operations with AI\n\nUsing AI-powered outsourcing services, we\u2019ll help you achieve your hiring needs, develop the best in-house talent, define skilling and retention strategies, transform learning experiences and bridge skill gaps to help unlock your workforce potential.\n\nTransform your talent acquisition and skills strategies with AI \nAI-driven Procurement transformation\n\nThe expertise to infuse Generative AI and automation into core procurement processes, enabling better real-time visibility, decision-making, and a deeper understanding of spend, contract management, strategic sourcing,\u00a0supply chain, and pricing.\n\nReimagine you procurement operations \nCustomer service transformation\n\nWith AI for customer service, IBM Consulting helps organizations develop a data and AI strategy to transform the customer interaction and empower their employees core competencies, delight customers and unlock new revenue streams for improved profitability.\n\nUnlock efficiency and supercharge your agents with generative AI \nTransform your industry operations with the right balance of people, data, and AI\n\nBoost revenue, enhance customer experience, and raise customer satisfaction for insurance, banking, financial services and more with IBM BPO services.\n\nIndustries in the AI era \nPepsiCo\\'s journey towards responsibly scaling AI\nRead how IBM Consulting helped PepsiCo establish a responsible AI framework, create a unified AI platform, and more.\nLearn more\nAnheuser-Busch\nAB InBev alleviates its complicated HR landscape, reinvests in more value-added services, and is operating more cost-effectively with the help of IBM Consulting.\nExplore the approach\nInsights\n\nGet the best of IBM in your inbox. Select from our collection of curated newsletters that deliver thought-provoking insights on information technology emerging trends.\n\nSubscribe now\nThe CEO\\'s Guide to Generative AI\nAs generative AI continues to rapidly evolve, operation teams can become an economy growth engine for the business.\nRead about it here\nGBS organizations of the future\nLearn how to reimagine your shared services by cultivating smarter operations that leverage data and insights for enhanced value creation.\nLearn what makes it possible\nThe power of AI & Automation: Intelligent workflows\n92% of polled executives agree that their organization\u2019s workflows will be digitized and will leverage AI-enabled automation by 2025\nLearn more here\nLearn why finance transformation propels business value\nAligning business functions to support agility, drive business outcomes, and enriching data are key factors that make digital transformation\nRead about it here\nApplication management for hybrid cloud\n\nComplete hybrid cloud management services to accelerate your cloud journey to unleash full potential of your investments.\n\nLearn more \nIBM Business Automation Workflow\n\nAutomate your digital workflows to increase productivity, efficiency and data analytics, on premises or on cloud.\n\nLearn more \nIBM watsonx Assistant\n\nDeliver consistent and intelligent customer support across all channels and touch points with conversational AI.\n\nLearn more \nFinance transformation consulting\n\nMigrate legacy ERP apps to the cloud and turn finance into a competitive advantage.\n\nLearn more \nTalent management consulting\n\nInspire your workforce and meet your complex HR needs with a people-centric approach to talent management.\n\nLearn more \nIBM Consulting Advantage\n\nIBM Consulting Advantage helps enable deeper insights and improved efficiency compared to traditional consultancy approaches.\n\nLearn more \nSubscribe to Think Newsletter\n\nKeep up with the latest news and insights from AI,security,\u00a0 automation, data and infrastructure straight to your inbox.\n\nSubscribe now\nKnow more\nExplore career opportunities\n\nJoin our team of dedicated, innovative people who are bringing positive change to work and the world.\u00a0\n\n\n\nRegister now \nVisit IBM Consulting\u2019s resources page\n\nSee our latest collection of reports, guidebooks, and thought leadership papers to help grow your business.\n\nLearn more']",
+                "created_on": "2025-12-17 18:20:06"
+            },
+            {
+                "name": "Capabilities\n\n\n\n\n    \n\n\n    \n        \n        \n\n     \n    Capabilities",
+                "visual_xpath": {
+                    "text": "//*[text()='Capabilities\n\n\n\n\n    \n\n\n    \n        \n        \n\n     \n    Capabilities']",
+                    "tag_text": "//c4d-content-block-heading[text()='Capabilities\n\n\n\n\n    \n\n\n    \n        \n        \n\n     \n    Capabilities']",
+                    "tag_contains": "//c4d-content-block-heading[contains(text(),'Capabilities\n\n\n\n\n    \n\n\n    \n        \n        \n\n  ')]",
+                    "placeholder": "",
+                    "value": "",
+                    "accessibility": "",
+                    "name": "",
+                    "href": "",
+                    "src": "",
+                    "alt": "",
+                    "title": ""
+                },
+                "relative_xpath": "/div[@id=\"container-d779249fa4\"]/div[5]/c4d-cta-block/c4d-content-block-heading",
+                "full_xpath": "/div[@id=\"container-d779249fa4\"]/div[5]/c4d-cta-block/c4d-content-block-heading",
+                "css_selector": "c4d-content-block-heading",
+                "custom_xpath": "",
+                "final_xpath": "//c4d-content-block-heading[text()='Capabilities\n\n\n\n\n    \n\n\n    \n        \n        \n\n     \n    Capabilities']",
+                "created_on": "2025-12-17 18:21:01"
+            }
+        ]
+    }
+}

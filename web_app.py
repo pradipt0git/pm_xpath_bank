@@ -1,12 +1,18 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_file
 import subprocess
 import json
 import os
 import signal
 import sys
 from collections import OrderedDict
+import csv
+import io
+from recheck import recheck_bp
 
 app = Flask(__name__)
+
+# Register recheck blueprint
+app.register_blueprint(recheck_bp)
 
 # Global variable to store the process
 capture_process = None
@@ -179,6 +185,49 @@ def delete_xpath():
             json.dump(json_data, f, indent=4)
         
         return jsonify({'status': 'success', 'message': 'XPath deleted successfully'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/download_csv/<filename>', methods=['GET'])
+def download_csv(filename):
+    filepath = os.path.join('output_folder', filename)
+    if not os.path.exists(filepath):
+        return jsonify({'status': 'error', 'message': 'File not found'}), 404
+    
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            json_data = json.load(f, object_pairs_hook=OrderedDict)
+        
+        # Create CSV in memory
+        output = io.StringIO()
+        csv_writer = csv.writer(output)
+        
+        # Write header
+        csv_writer.writerow(['Page URL', 'Page Name', 'Element Name', 'Final XPath', 'Created On'])
+        
+        # Write data rows
+        for page_url, page_data in json_data.items():
+            page_name = page_data.get('page_name', '')
+            if page_data.get('xpaths'):
+                for xpath_entry in page_data['xpaths']:
+                    csv_writer.writerow([
+                        page_url,
+                        page_name,
+                        xpath_entry.get('name', ''),
+                        xpath_entry.get('final_xpath', ''),
+                        xpath_entry.get('created_on', '')
+                    ])
+        
+        # Prepare response
+        output.seek(0)
+        csv_filename = filename.replace('.json', '.csv')
+        
+        return send_file(
+            io.BytesIO(output.getvalue().encode('utf-8')),
+            mimetype='text/csv',
+            as_attachment=True,
+            download_name=csv_filename
+        )
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
