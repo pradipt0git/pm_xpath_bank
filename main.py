@@ -55,7 +55,7 @@ def get_final_xpath(visual):
     return ''
 
 async def ws_handler(websocket):
-    global data, output_file, check_event, stop_event
+    global data, output_file, check_event, stop_event, driver
     try:
         async for message in websocket:
             click_data = json.loads(message)
@@ -76,17 +76,53 @@ async def ws_handler(websocket):
                     'display_order': max_order + 1,
                     'xpaths': []
                 }
+            # Prepare all xpaths with counts from JavaScript
+            xpath_types = ['visual_xpath', 'relative_xpath', 'full_xpath', 'css_selector']
+            xpath_counts = {}
+            
+            # Process visual xpaths with counts from JS
+            if 'visual_xpath_counts' in click_data:
+                for vkey, xpath in click_data['visual_xpath'].items():
+                    if xpath:
+                        count = click_data['visual_xpath_counts'].get(vkey, 0)
+                        xpath_counts[vkey] = {'xpath': xpath, 'count': count}
+            
+            # Process relative xpath with count from JS
+            if click_data.get('relative_xpath'):
+                count = click_data.get('relative_xpath_count', 0)
+                xpath_counts['relative_xpath'] = {'xpath': click_data['relative_xpath'], 'count': count}
+            
+            # Process full xpath with count from JS
+            if click_data.get('full_xpath'):
+                count = click_data.get('full_xpath_count', 0)
+                xpath_counts['full_xpath'] = {'xpath': click_data['full_xpath'], 'count': count}
+            
+            # Process css selector with count from JS
+            if click_data.get('css_selector'):
+                count = click_data.get('css_selector_count', 0)
+                xpath_counts['css_selector'] = {'xpath': click_data['css_selector'], 'count': count}
+
+            # Determine final_xpath: prefer any valid xpath with count==1, else blank
+            final_xpath = ''
+            for k, v in xpath_counts.items():
+                xpath_val = v['xpath']
+                # Only consider non-empty, valid xpaths (skip incomplete ones)
+                if v['count'] == 1 and xpath_val and not xpath_val.strip().endswith('=') and not xpath_val.strip().endswith('[]'):
+                    final_xpath = xpath_val
+                    break
+
             xpath_entry = {
                 'name': click_data['name'],
-                'visual_xpath': click_data['visual_xpath'],
-                'relative_xpath': click_data['relative_xpath'],
-                'full_xpath': click_data['full_xpath'],
-                'css_selector': click_data['css_selector'],
+                'visual_xpath': {vk: {'xpath': vv['xpath'], 'count': vv['count']} for vk, vv in xpath_counts.items() if vk in click_data['visual_xpath']},
+                'relative_xpath': {'xpath': xpath_counts.get('relative_xpath', {}).get('xpath', ''), 'count': xpath_counts.get('relative_xpath', {}).get('count', 0)},
+                'full_xpath': {'xpath': xpath_counts.get('full_xpath', {}).get('xpath', ''), 'count': xpath_counts.get('full_xpath', {}).get('count', 0)},
+                'css_selector': {'xpath': xpath_counts.get('css_selector', {}).get('xpath', ''), 'count': xpath_counts.get('css_selector', {}).get('count', 0)},
                 'custom_xpath': '',
-                'final_xpath': get_final_xpath(click_data['visual_xpath']),
+                'final_xpath': final_xpath,
                 'created_on': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             }
-            if not any(entry.get('final_xpath') == xpath_entry['final_xpath'] for entry in data[page_key]['xpaths']):
+            # Only add if not duplicate (by name and all xpaths)
+            if not any(entry.get('name') == xpath_entry['name'] and entry.get('final_xpath') == xpath_entry['final_xpath'] for entry in data[page_key]['xpaths']):
                 data[page_key]['xpaths'].append(xpath_entry)
                 with open(output_file, 'w') as f:
                     json.dump(data, f, indent=4)
@@ -230,6 +266,37 @@ def inject_click_listener(driver):
                 page_name: document.title
             }};
             
+            // Count elements BEFORE navigation happens
+            function countXPath(xpath) {{
+                try {{
+                    var result = document.evaluate(xpath, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                    return result.snapshotLength;
+                }} catch(e) {{
+                    return 0;
+                }}
+            }}
+            
+            function countCSS(selector) {{
+                try {{
+                    return document.querySelectorAll(selector).length;
+                }} catch(e) {{
+                    return 0;
+                }}
+            }}
+            
+            // Add counts to visual xpaths
+            clickData.visual_xpath_counts = {{}};
+            for (var key in clickData.visual_xpath) {{
+                if (clickData.visual_xpath[key]) {{
+                    clickData.visual_xpath_counts[key] = countXPath(clickData.visual_xpath[key]);
+                }}
+            }}
+            
+            // Add counts for relative, full xpath, and css
+            clickData.relative_xpath_count = countXPath(clickData.relative_xpath);
+            clickData.full_xpath_count = countXPath(clickData.full_xpath);
+            clickData.css_selector_count = countCSS(clickData.css_selector);
+            
             if (window.recheckMode) {{
                 console.log('[XPath Collector] Recheck mode - click ignored');
                 return;
@@ -270,17 +337,15 @@ def inject_click_listener(driver):
             path.unshift(selector);
             element = element.parentNode;
         }}
-        return path.length ? '/' + path.join('/') : '';
+        return path.length ? '//' + path.join('/') : '';
     }}
 
     function getFullXPath(element) {{
         var path = [];
-        while (element.nodeType === Node.ELEMENT_NODE) {{
+        while (element && element.nodeType === Node.ELEMENT_NODE) {{
             var selector = element.nodeName.toLowerCase();
             if (element.id) {{
                 selector += '[@id="' + element.id + '"]';
-                path.unshift(selector);
-                break;
             }} else {{
                 var sibling = element.previousSibling;
                 var nth = 1;
@@ -293,7 +358,7 @@ def inject_click_listener(driver):
             path.unshift(selector);
             element = element.parentNode;
         }}
-        return '/' + path.join('/');
+        return '//' + path.join('/');
     }}
 
     function getCSSSelector(element) {{
@@ -306,7 +371,7 @@ def inject_click_listener(driver):
 
 def main():
     import os
-    global data, output_file, check_event, stop_event
+    global data, output_file, check_event, stop_event, driver
     parser = argparse.ArgumentParser()
     parser.add_argument('--url', help='URL to load')
     parser.add_argument('--recheck', action='store_true', help='Recheck mode - disable XPath capture')

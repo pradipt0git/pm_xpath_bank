@@ -232,6 +232,69 @@
             padding: 30px;
             font-style: italic;
         }
+        .xpath-count {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        .xpath-count.unique {
+            background: #28a745;
+        }
+        .xpath-count.multiple {
+            background: #ffc107;
+            color: #333;
+        }
+        .xpath-count.invalid {
+            background: #dc3545;
+        }
+        .xpath-list {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .xpath-list label {
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .xpath-list label:first-child {
+            margin-top: 0;
+        }
+        .xpath-list ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .xpath-list li {
+            padding: 6px 8px;
+            background: white;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        .xpath-list div {
+            padding: 6px 8px;
+            background: white;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        .xpath-value {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -261,9 +324,10 @@
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
-            return div.innerHTML;
+            return div.innerHTML.replace(/"/g, '&quot;');
         }
 
         function loadRecheckData() {
@@ -503,10 +567,14 @@
                 }
             }
             
-            // Add delay to wait for page to fully load (2 seconds for first validation, immediate for re-validation)
-            const validationDelay = forceRevalidate ? 0 : 2000;
+            // Wait 2 seconds then validate
+            const initialDelay = forceRevalidate ? 0 : 2000;
             
             setTimeout(() => {
+                performValidation(false); // First attempt
+            }, initialDelay);
+            
+            function performValidation(isRetry) {
                 // Call validation endpoint
                 fetch('/validate_xpaths', {
                     method: 'POST',
@@ -518,6 +586,8 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
+                        let anyFailed = false;
+                        
                         // Update validation icons only if result changed
                         items.forEach(item => {
                             const xpath = item.getAttribute('data-xpath');
@@ -525,6 +595,11 @@
                             if (icon && xpath && data.results.hasOwnProperty(xpath)) {
                                 const newResult = data.results[xpath];
                                 const previousResult = validationResults[xpath];
+                                
+                                // Track if any validation failed
+                                if (!newResult) {
+                                    anyFailed = true;
+                                }
                                 
                                 // Only update if result changed or first time or forced
                                 if (forceRevalidate || previousResult === undefined || previousResult !== newResult) {
@@ -534,12 +609,39 @@
                                 }
                             }
                         });
+                        
+                        // If any failed and this is not a retry and not a forced validation, retry once after 2 seconds
+                        if (anyFailed && !isRetry && !forceRevalidate) {
+                            setTimeout(() => {
+                                // Set icons back to checking state
+                                items.forEach(item => {
+                                    const icon = item.querySelector('[data-validation-icon]');
+                                    if (icon && icon.className.includes('invalid')) {
+                                        icon.textContent = '⏳';
+                                        icon.className = 'validation-icon checking';
+                                    }
+                                });
+                                performValidation(true); // Retry with isRetry = true
+                            }, 2000);
+                        }
                     }
                 })
                 .catch(error => {
                     console.log('Validation error:', error);
-                    // On error, set to error state only if first validation
-                    if (isFirstValidation) {
+                    // On error, retry once if not already a retry
+                    if (!isRetry && !forceRevalidate) {
+                        setTimeout(() => {
+                            items.forEach(item => {
+                                const icon = item.querySelector('[data-validation-icon]');
+                                if (icon) {
+                                    icon.textContent = '⏳';
+                                    icon.className = 'validation-icon checking';
+                                }
+                            });
+                            performValidation(true);
+                        }, 2000);
+                    } else {
+                        // On error after retry, set to error state
                         items.forEach(item => {
                             const icon = item.querySelector('[data-validation-icon]');
                             if (icon) {
@@ -549,7 +651,7 @@
                         });
                     }
                 });
-            }, validationDelay);
+            }
         }
         
         function showMessage(message, isError = false) {

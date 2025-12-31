@@ -114,6 +114,12 @@ def validate_xpaths():
         validation_file = 'xpath_validation_request.json'
         result_file = 'xpath_validation_result.json'
         
+        # Check if browser is running by checking if current_url.txt exists
+        if not os.path.exists('current_url.txt'):
+            # Browser not launched yet, return all as invalid without error
+            result = {xpath: False for xpath in xpaths}
+            return jsonify({'status': 'success', 'results': result})
+        
         # Clean up old result file
         if os.path.exists(result_file):
             os.remove(result_file)
@@ -128,7 +134,11 @@ def validate_xpaths():
         start_time = time.time()
         while not os.path.exists(result_file):
             if time.time() - start_time > timeout:
-                return jsonify({'status': 'error', 'message': 'Validation timeout'}), 500
+                # Timeout - browser might be busy, return all as invalid
+                result = {xpath: False for xpath in xpaths}
+                if os.path.exists(validation_file):
+                    os.remove(validation_file)
+                return jsonify({'status': 'success', 'results': result})
             time.sleep(0.1)
         
         # Read result

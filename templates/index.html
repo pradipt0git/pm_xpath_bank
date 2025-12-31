@@ -375,6 +375,36 @@
             padding: 30px;
             font-style: italic;
         }
+        .xpath-count {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        .xpath-count.unique {
+            background: #28a745;
+        }
+        .xpath-count.multiple {
+            background: #ffc107;
+            color: #333;
+        }
+        .xpath-count.invalid {
+            background: #dc3545;
+        }
+        .xpath-with-count {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .xpath-value {
+            flex: 1;
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
@@ -641,83 +671,57 @@
                                     <button class="toggle-details" onclick="toggleDetails(this)">Show All XPaths ▼</button>
                                     <div class="details-content">
                                         <label>Relative XPath:</label>
-                                        <div class="xpath-readonly">${escapeHtml(xpath.relative_xpath || 'N/A')}</div>
+                                        <div class="xpath-readonly xpath-with-count">
+                                            <span class="xpath-value">${escapeHtml((xpath.relative_xpath && xpath.relative_xpath.xpath) ? xpath.relative_xpath.xpath : (typeof xpath.relative_xpath === 'string' ? xpath.relative_xpath : 'N/A'))}</span>
+                                            ${(xpath.relative_xpath && typeof xpath.relative_xpath.count !== 'undefined') ? `<span class="xpath-count ${xpath.relative_xpath.count === 1 ? 'unique' : (xpath.relative_xpath.count === 0 ? 'invalid' : 'multiple')}">Count: ${xpath.relative_xpath.count}</span>` : ''}
+                                        </div>
                                         
                                         <label>Full XPath:</label>
-                                        <div class="xpath-readonly">${escapeHtml(xpath.full_xpath || 'N/A')}</div>
+                                        <div class="xpath-readonly xpath-with-count">
+                                            <span class="xpath-value">${escapeHtml((xpath.full_xpath && xpath.full_xpath.xpath) ? xpath.full_xpath.xpath : (typeof xpath.full_xpath === 'string' ? xpath.full_xpath : 'N/A'))}</span>
+                                            ${(xpath.full_xpath && typeof xpath.full_xpath.count !== 'undefined') ? `<span class="xpath-count ${xpath.full_xpath.count === 1 ? 'unique' : (xpath.full_xpath.count === 0 ? 'invalid' : 'multiple')}">Count: ${xpath.full_xpath.count}</span>` : ''}
+                                        </div>
                                         
                                         <label>CSS Selector:</label>
-                                        <div class="xpath-readonly">${escapeHtml(xpath.css_selector || 'N/A')}</div>
+                                        <div class="xpath-readonly xpath-with-count">
+                                            <span class="xpath-value">${escapeHtml((xpath.css_selector && xpath.css_selector.xpath) ? xpath.css_selector.xpath : (typeof xpath.css_selector === 'string' ? xpath.css_selector : 'N/A'))}</span>
+                                            ${(xpath.css_selector && typeof xpath.css_selector.count !== 'undefined') ? `<span class="xpath-count ${xpath.css_selector.count === 1 ? 'unique' : (xpath.css_selector.count === 0 ? 'invalid' : 'multiple')}">Count: ${xpath.css_selector.count}</span>` : ''}
+                                        </div>
                         `;
                         
                         // Add visual xpaths if they exist
                         if (xpath.visual_xpath) {
-                            if (xpath.visual_xpath.text) {
-                                html += `
-                                    <label>Visual XPath (Text):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.text)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.tag_text) {
-                                html += `
-                                    <label>Visual XPath (Tag + Text):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.tag_text)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.tag_contains) {
-                                html += `
-                                    <label>Visual XPath (Tag Contains):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.tag_contains)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.placeholder) {
-                                html += `
-                                    <label>Visual XPath (Placeholder):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.placeholder)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.value) {
-                                html += `
-                                    <label>Visual XPath (Value):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.value)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.accessibility) {
-                                html += `
-                                    <label>Visual XPath (Aria-Label):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.accessibility)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.name) {
-                                html += `
-                                    <label>Visual XPath (Name):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.name)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.href) {
-                                html += `
-                                    <label>Visual XPath (Href):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.href)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.src) {
-                                html += `
-                                    <label>Visual XPath (Src):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.src)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.alt) {
-                                html += `
-                                    <label>Visual XPath (Alt):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.alt)}</div>
-                                `;
-                            }
-                            if (xpath.visual_xpath.title) {
-                                html += `
-                                    <label>Visual XPath (Title):</label>
-                                    <div class="xpath-readonly">${escapeHtml(xpath.visual_xpath.title)}</div>
-                                `;
-                            }
+                            const visualLabels = {
+                                text: 'Text',
+                                tag_text: 'Tag + Text',
+                                tag_contains: 'Tag Contains',
+                                placeholder: 'Placeholder',
+                                value: 'Value',
+                                accessibility: 'Aria-Label',
+                                name: 'Name',
+                                href: 'Href',
+                                src: 'Src',
+                                alt: 'Alt',
+                                title: 'Title'
+                            };
+                            
+                            Object.entries(visualLabels).forEach(([key, label]) => {
+                                const visualItem = xpath.visual_xpath[key];
+                                if (visualItem) {
+                                    const xpathValue = (typeof visualItem === 'object' && visualItem.xpath) ? visualItem.xpath : (typeof visualItem === 'string' ? visualItem : '');
+                                    const count = (typeof visualItem === 'object' && typeof visualItem.count !== 'undefined') ? visualItem.count : null;
+                                    
+                                    if (xpathValue) {
+                                        html += `
+                                            <label>Visual XPath (${label}):</label>
+                                            <div class="xpath-readonly xpath-with-count">
+                                                <span class="xpath-value">${escapeHtml(xpathValue)}</span>
+                                                ${count !== null ? `<span class="xpath-count ${count === 1 ? 'unique' : (count === 0 ? 'invalid' : 'multiple')}">Count: ${count}</span>` : ''}
+                                            </div>
+                                        `;
+                                    }
+                                }
+                            });
                         }
                         
                         if (xpath.custom_xpath) {
@@ -775,9 +779,10 @@
         }
 
         function escapeHtml(text) {
+            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
-            return div.innerHTML;
+            return div.innerHTML.replace(/"/g, '&quot;');
         }
 
         function saveXPath(filename, pageUrl, index) {
