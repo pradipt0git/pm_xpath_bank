@@ -1,0 +1,4 @@
+page_url,element_name,element_xpath,is_exist,checked_date_time
+https://www.ibm.com/in-en,close icon,"//*[@id=""truste-consent-close""]",yes,2026-01-05 17:28:08
+https://www.ibm.com/in-en,Accelerate growth in 2026,"//span[contains(text(),'Accelerate growth in 2026')]",yes,2026-01-05 17:28:08
+https://www.ibm.com/in-en,Karnataka Bank Innovates with IBM to Build Future-Ready API Platform for Faster Service Delivery to Customers,"//div[@id=""mbox-leadspace-side""]/div/c4d-link-list/c4d-link-list-item[2]/p",yes,2026-01-05 17:28:08
